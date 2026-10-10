@@ -1,0 +1,32 @@
+{% macro csrf() %}<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">{% endmacro %}
+
+{% macro field(label, name, value='', errors={}, type='text', required=False, help='', maxlength=None, readonly=False, inputmode=None) %}
+<div class="mb-3">
+  <label for="f-{{ name }}" class="form-label">{{ label }}{% if required %}<span class="req" aria-hidden="true"> *</span><span class="visually-hidden"> (required)</span>{% endif %}</label>
+  <input class="form-control{% if errors.get(name) %} is-invalid{% endif %}" id="f-{{ name }}" name="{{ name }}" type="{{ type }}"
+         value="{{ value if value is not none else '' }}"{% if required %} required{% endif %}{% if maxlength %} maxlength="{{ maxlength }}"{% endif %}{% if readonly %} readonly{% endif %}{% if inputmode %} inputmode="{{ inputmode }}"{% endif %}
+         {% if errors.get(name) %}aria-invalid="true" {% endif %}aria-describedby="{% if help %}h-{{ name }} {% endif %}{% if errors.get(name) %}e-{{ name }}{% endif %}">
+  {% if help %}<div class="form-text" id="h-{{ name }}">{{ help }}</div>{% endif %}
+  {% if errors.get(name) %}<div class="invalid-feedback" id="e-{{ name }}">{{ errors[name] }}</div>{% endif %}
+</div>
+{% endmacro %}
+
+{% macro select(label, name, options, selected='', errors={}, required=False, placeholder='', help='') %}
+<div class="mb-3">
+  <label for="f-{{ name }}" class="form-label">{{ label }}{% if required %}<span class="req" aria-hidden="true"> *</span><span class="visually-hidden"> (required)</span>{% endif %}</label>
+  <select class="form-select{% if errors.get(name) %} is-invalid{% endif %}" id="f-{{ name }}" name="{{ name }}"{% if required %} required{% endif %}
+          {% if errors.get(name) %}aria-invalid="true" {% endif %}aria-describedby="{% if help %}h-{{ name }} {% endif %}{% if errors.get(name) %}e-{{ name }}{% endif %}">
+    {% if placeholder %}<option value="">{{ placeholder }}</option>{% endif %}
+    {% for value, text in options %}<option value="{{ value }}"{% if value == selected %} selected{% endif %}>{{ text }}</option>{% endfor %}
+  </select>
+  {% if help %}<div class="form-text" id="h-{{ name }}">{{ help }}</div>{% endif %}
+  {% if errors.get(name) %}<div class="invalid-feedback" id="e-{{ name }}">{{ errors[name] }}</div>{% endif %}
+</div>
+{% endmacro %}
+
+{% macro status_badge(row) %}
+{% if row.return_date %}<span class="badge text-bg-secondary">Returned</span>
+{% elif row.is_overdue %}<span class="badge badge-overdue">Overdue {{ row.overdue_days }} day{{ '' if row.overdue_days == 1 else 's' }}</span>
+{% elif row.days_left == 0 %}<span class="badge text-bg-warning">Due today</span>
+{% else %}<span class="badge badge-ontime">On loan, {{ row.days_left }} day{{ '' if row.days_left == 1 else 's' }} left</span>{% endif %}
+{% endmacro %}

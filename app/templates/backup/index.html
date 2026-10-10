@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Backup and restore{% endblock %}
+{% block content %}
+{% import '_macros.html' as m %}
+<div class="page-head"><h1>Backup and restore</h1></div>
+{% if problems %}
+<div class="alert alert-danger" role="alert"><strong>The file {{ filename }} was rejected and nothing was changed.</strong>
+  <ul class="mb-0 mt-2">{% for p in problems %}<li>{{ p }}</li>{% endfor %}</ul>{% if more %}<p class="mb-0 mt-2">And {{ more }} more problem{{ '' if more == 1 else 's' }}.</p>{% endif %}</div>
+{% endif %}
+<div class="row g-4">
+  <section class="col-12 col-lg-6" aria-labelledby="exp-h"><div class="panel h-100">
+    <h2 class="h5" id="exp-h">Export a backup</h2>
+    <p>Download all books, members, transactions and settings as one JSON file. The file carries a checksum so damage or edits can be detected when it is restored.</p>
+    <p class="muted">Current data: {{ counts.books }} books, {{ counts.members }} members, {{ counts.transactions }} transactions ({{ counts.issued }} currently issued).</p>
+    <a class="btn btn-primary" href="{{ url_for('backup.export') }}">Download backup</a>
+  </div></section>
+  <section class="col-12 col-lg-6" aria-labelledby="res-h"><div class="panel h-100">
+    <h2 class="h5" id="res-h">Restore from a backup</h2>
+    <p>The file is checked first. You will see a summary and must confirm before any data is replaced.</p>
+    <form method="post" action="{{ url_for('backup.validate') }}" enctype="multipart/form-data">
+      {{ m.csrf() }}
+      <div class="mb-3"><label for="backup_file" class="form-label">Backup file (.json, up to 2 MB)</label>
+        <input class="form-control" type="file" id="backup_file" name="backup_file" accept=".json,application/json" required></div>
+      <button class="btn btn-outline-primary" type="submit">Check file</button>
+    </form>
+  </div></section>
+</div>
+<p class="muted mt-3">On Render Free the filesystem is ephemeral, so data can disappear when the service restarts. Download a backup before you finish a session.</p>
+{% endblock %}

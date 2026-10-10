@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Available books{% endblock %}
+{% block content %}
+<div class="page-head"><h1>Available books</h1></div>
+<form class="panel filter-bar" method="get" action="{{ url_for('circulation.available') }}" role="search">
+  <div class="row g-2 align-items-end">
+    <div class="col-12 col-md-8"><label for="q" class="form-label">Search by title or author</label><input id="q" class="form-control" type="search" name="q" value="{{ q }}" maxlength="100"></div>
+    <div class="col-12 col-md-4 d-flex gap-2"><button class="btn btn-primary flex-fill" type="submit">Search</button><a class="btn btn-outline-secondary" href="{{ url_for('circulation.available') }}">Reset</a></div>
+  </div>
+</form>
+<p class="result-count" role="status">{{ books|length }} title{{ '' if books|length == 1 else 's' }} with copies on the shelf.</p>
+{% if books %}
+<div class="panel p-0"><div class="table-responsive"><table class="table table-hover align-middle mb-0">
+  <caption class="visually-hidden">Books with available copies</caption>
+  <thead><tr><th scope="col">ID</th><th scope="col">Title</th><th scope="col">Author</th><th scope="col">Category</th><th scope="col" class="text-end">Available copies</th><th scope="col" class="text-end">Total copies</th><th scope="col" class="text-end">Action</th></tr></thead>
+  <tbody>{% for b in books %}<tr><td class="nowrap">{{ b.book_id }}</td><td>{{ b.title }}</td><td>{{ b.author }}</td><td>{{ b.category or '-' }}</td><td class="text-end">{{ b.available_copies }}</td><td class="text-end">{{ b.total_copies }}</td>
+    <td class="text-end"><a class="btn btn-sm btn-outline-primary" href="{{ url_for('circulation.issue', book_id=b.book_id) }}">Issue<span class="visually-hidden"> {{ b.title }}</span></a></td></tr>{% endfor %}</tbody></table></div></div>
+{% else %}<div class="panel empty">No available books match your search.</div>{% endif %}
+{% endblock %}

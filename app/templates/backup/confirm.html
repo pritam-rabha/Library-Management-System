@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Confirm restore{% endblock %}
+{% block content %}
+{% import '_macros.html' as m %}
+<div class="page-head"><h1>Confirm restore</h1></div>
+<div class="alert alert-warning" role="alert">The file <strong>{{ filename }}</strong> passed all checks. Restoring will replace the current library data completely.</div>
+<div class="panel p-0"><div class="table-responsive"><table class="table mb-0">
+  <caption class="visually-hidden">Comparison of current data and backup contents</caption>
+  <thead><tr><th scope="col">Records</th><th scope="col" class="text-end">Current data</th><th scope="col" class="text-end">Backup file</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Books</th><td class="text-end">{{ current.books }}</td><td class="text-end">{{ incoming.books }}</td></tr>
+    <tr><th scope="row">Members</th><td class="text-end">{{ current.members }}</td><td class="text-end">{{ incoming.members }}</td></tr>
+    <tr><th scope="row">Transactions</th><td class="text-end">{{ current.transactions }}</td><td class="text-end">{{ incoming.transactions }}</td></tr>
+    <tr><th scope="row">Currently issued</th><td class="text-end">{{ current.issued }}</td><td class="text-end">{{ incoming.issued }}</td></tr>
+  </tbody></table></div></div>
+<p class="muted">Backup exported at {{ exported_at }}. A copy of the current data is kept as library.pre-restore.json before it is replaced.</p>
+<form class="panel" method="post" action="{{ url_for('backup.restore') }}" data-confirm="Replace all current library data with the contents of {{ filename }}?">
+  {{ m.csrf() }}<input type="hidden" name="token" value="{{ token }}">
+  <div class="form-check mb-3"><input class="form-check-input" type="checkbox" id="confirm" name="confirm" value="yes" required>
+    <label class="form-check-label" for="confirm">I understand that the current data will be replaced by this backup.</label></div>
+  <button class="btn btn-danger" type="submit">Restore backup</button>
+  <a class="btn btn-outline-secondary" href="{{ url_for('backup.index') }}">Cancel</a>
+</form>
+{% endblock %}

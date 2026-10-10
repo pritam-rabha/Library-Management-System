@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Add a book' if mode == 'new' else 'Edit book' }}{% endblock %}
+{% block content %}
+{% import '_macros.html' as m %}
+<div class="page-head"><h1>{{ 'Add a book' if mode == 'new' else 'Edit book ' ~ book.book_id }}</h1></div>
+{% if errors %}<div class="alert alert-danger" role="alert">Please correct the highlighted fields.</div>{% endif %}
+<form class="panel form-panel" method="post" novalidate>
+  {{ m.csrf() }}
+  <div class="row">
+    <div class="col-md-4">{{ m.field('Book ID', 'book_id', values.get('book_id', ''), errors, required=True, maxlength=20, readonly=(mode == 'edit'), help='Unique. Letters, digits, hyphen or underscore.') }}</div>
+    <div class="col-md-8">{{ m.field('Title', 'title', values.get('title', ''), errors, required=True, maxlength=200) }}</div>
+    <div class="col-md-6">{{ m.field('Author', 'author', values.get('author', ''), errors, required=True, maxlength=120) }}</div>
+    <div class="col-md-6">{{ m.field('ISBN', 'isbn', values.get('isbn', ''), errors, maxlength=20, help='Optional. 10 or 13 digits.') }}</div>
+    <div class="col-md-5">{{ m.field('Category', 'category', values.get('category', ''), errors, maxlength=60) }}</div>
+    <div class="col-md-3">{{ m.field('Publication year', 'publication_year', values.get('publication_year', ''), errors, inputmode='numeric', maxlength=4) }}</div>
+    <div class="col-md-4">{{ m.field('Total copies', 'total_copies', values.get('total_copies', ''), errors, type='number', required=True, help='Copies currently issued are counted automatically.') }}</div>
+  </div>
+  <div class="form-actions"><button class="btn btn-primary" type="submit">{{ 'Add book' if mode == 'new' else 'Save changes' }}</button>
+    <a class="btn btn-outline-secondary" href="{{ url_for('books.index') if mode == 'new' else url_for('books.detail', book_id=book.book_id) }}">Cancel</a></div>
+</form>
+{% endblock %}

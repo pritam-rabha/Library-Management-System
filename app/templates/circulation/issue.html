@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Issue a book{% endblock %}
+{% block content %}
+{% import '_macros.html' as m %}
+<div class="page-head"><h1>Issue a book</h1></div>
+<div class="row g-4">
+  <div class="col-12 col-lg-8">
+    {% if errors %}<div class="alert alert-danger" role="alert">Please correct the highlighted fields.</div>{% endif %}
+    <form class="panel form-panel" method="post" action="{{ url_for('circulation.issue') }}" novalidate>
+      {{ m.csrf() }}
+      <div class="mb-3">
+        <label for="f-book_id" class="form-label">Book<span class="req" aria-hidden="true"> *</span><span class="visually-hidden"> (required)</span></label>
+        <select class="form-select{% if errors.get('book_id') %} is-invalid{% endif %}" id="f-book_id" name="book_id" required aria-describedby="h-book_id">
+          <option value="">Select an available book</option>
+          {% for b in books %}<option value="{{ b.book_id }}"{% if b.book_id == values.get('book_id') %} selected{% endif %}>{{ b.book_id }} - {{ b.title }} ({{ b.available_copies }} available)</option>{% endfor %}
+        </select>
+        <div class="form-text" id="h-book_id">Only books with at least one available copy are listed.</div>
+        {% if errors.get('book_id') %}<div class="invalid-feedback">{{ errors['book_id'] }}</div>{% endif %}
+      </div>
+      <div class="mb-3">
+        <label for="f-member_id" class="form-label">Member<span class="req" aria-hidden="true"> *</span><span class="visually-hidden"> (required)</span></label>
+        <select class="form-select{% if errors.get('member_id') %} is-invalid{% endif %}" id="f-member_id" name="member_id" required>
+          <option value="">Select a registered member</option>
+          {% for x in members %}<option value="{{ x.member_id }}"{% if x.member_id == values.get('member_id') %} selected{% endif %}>{{ x.member_id }} - {{ x.name }}</option>{% endfor %}
+        </select>
+        {% if errors.get('member_id') %}<div class="invalid-feedback">{{ errors['member_id'] }}</div>{% endif %}
+      </div>
+      {{ m.field('Loan period in days', 'loan_days', values.get('loan_days', ''), errors, type='number', help='Leave blank to use the standard loan period of ' ~ settings.loan_days ~ ' days.') }}
+      <div class="form-actions"><button class="btn btn-primary" type="submit">Issue book</button>
+        <a class="btn btn-outline-secondary" href="{{ url_for('circulation.issued') }}">Cancel</a></div>
+    </form>
+  </div>
+  <div class="col-12 col-lg-4">
+    <aside class="panel" aria-labelledby="rules-h"><h2 class="h6" id="rules-h">Lending rules</h2>
+      <ul class="rules">
+        <li>Standard loan period: {{ settings.loan_days }} days from today.</li>
+        <li>Fine for late returns: {{ settings.fine_per_day|money }} per overdue day.</li>
+        <li>Each member may hold up to {{ settings.max_loans_per_member }} books at a time.</li>
+      </ul></aside>
+  </div>
+</div>
+{% endblock %}

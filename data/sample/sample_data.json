@@ -1,0 +1,307 @@
+{
+  "_note": "Fictional sample data for demonstration. Loan dates are relative to the day the runtime file is first created.",
+  "books": [
+    {
+      "book_id": "BK-1001",
+      "title": "The Lantern Keepers of Vellmoor",
+      "author": "Anjali Deshmukh",
+      "isbn": "9789350001000",
+      "category": "Fiction",
+      "publication_year": 2016,
+      "total_copies": 4
+    },
+    {
+      "book_id": "BK-1002",
+      "title": "Rivers Beneath the Salt Plain",
+      "author": "Rohan Mukherjee",
+      "isbn": "9789350001007",
+      "category": "Fiction",
+      "publication_year": 2019,
+      "total_copies": 3
+    },
+    {
+      "book_id": "BK-1003",
+      "title": "A Quiet Arithmetic of Stars",
+      "author": "Ishita Banerjee",
+      "isbn": "9789350001014",
+      "category": "Science",
+      "publication_year": 2014,
+      "total_copies": 2
+    },
+    {
+      "book_id": "BK-1004",
+      "title": "Foundations of Distributed Computing Systems",
+      "author": "Kavita Rao",
+      "isbn": "9789350001021",
+      "category": "Technology",
+      "publication_year": 2021,
+      "total_copies": 5
+    },
+    {
+      "book_id": "BK-1005",
+      "title": "Practical Data Structures with Python",
+      "author": "Arvind Nambiar",
+      "isbn": "9789350001028",
+      "category": "Technology",
+      "publication_year": 2022,
+      "total_copies": 6
+    },
+    {
+      "book_id": "BK-1006",
+      "title": "Database Design for Small Institutions",
+      "author": "Meenal Joshi",
+      "isbn": "9789350001035",
+      "category": "Technology",
+      "publication_year": 2018,
+      "total_copies": 3
+    },
+    {
+      "book_id": "BK-1007",
+      "title": "The Ledger of the Sagar Merchants",
+      "author": "Harish Pathak",
+      "isbn": "9789350001042",
+      "category": "History",
+      "publication_year": 2012,
+      "total_copies": 2
+    },
+    {
+      "book_id": "BK-1008",
+      "title": "Roads, Rails and Rivers: Transport in Central India",
+      "author": "Sunita Verma",
+      "isbn": "9789350001049",
+      "category": "History",
+      "publication_year": 2017,
+      "total_copies": 3
+    },
+    {
+      "book_id": "BK-1009",
+      "title": "Linear Algebra Without Tears",
+      "author": "Prakash Iyer",
+      "isbn": "9789350001056",
+      "category": "Mathematics",
+      "publication_year": 2015,
+      "total_copies": 4
+    },
+    {
+      "book_id": "BK-1010",
+      "title": "Probability for the Curious Mind",
+      "author": "Neha Kulkarni",
+      "isbn": "9789350001063",
+      "category": "Mathematics",
+      "publication_year": 2020,
+      "total_copies": 3
+    },
+    {
+      "book_id": "BK-1011",
+      "title": "The Weaver of Chanderi: A Life in Thread",
+      "author": "Farida Sheikh",
+      "isbn": "9789350001070",
+      "category": "Biography",
+      "publication_year": 2013,
+      "total_copies": 2
+    },
+    {
+      "book_id": "BK-1012",
+      "title": "Letters from a Hill Station Physician",
+      "author": "Omkar Sathe",
+      "isbn": "9789350001077",
+      "category": "Biography",
+      "publication_year": 2010,
+      "total_copies": 1
+    },
+    {
+      "book_id": "BK-1013",
+      "title": "Software Testing in Practice",
+      "author": "Leela Menon",
+      "isbn": "9789350001084",
+      "category": "Technology",
+      "publication_year": 2019,
+      "total_copies": 4
+    },
+    {
+      "book_id": "BK-1014",
+      "title": "Network Security Essentials for Students",
+      "author": "Tarun Bhatia",
+      "isbn": "9789350001091",
+      "category": "Technology",
+      "publication_year": 2020,
+      "total_copies": 3
+    },
+    {
+      "book_id": "BK-1015",
+      "title": "Handbook of Academic Writing and Citation",
+      "author": "Sarita Pillai",
+      "isbn": "9789350001098",
+      "category": "Reference",
+      "publication_year": 2018,
+      "total_copies": 2
+    },
+    {
+      "book_id": "BK-1016",
+      "title": "Atlas of Peninsular Flora",
+      "author": "Devika Chandran",
+      "isbn": "9789350001105",
+      "category": "Science",
+      "publication_year": 2011,
+      "total_copies": 1
+    },
+    {
+      "book_id": "BK-1017",
+      "title": "Echoes in the Stepwell",
+      "author": "Madhav Tiwari",
+      "isbn": "9789350001112",
+      "category": "Fiction",
+      "publication_year": 2021,
+      "total_copies": 3
+    },
+    {
+      "book_id": "BK-1018",
+      "title": "Introduction to Operating Systems Concepts",
+      "author": "Rajeev Saxena",
+      "isbn": "9789350001119",
+      "category": "Technology",
+      "publication_year": 2017,
+      "total_copies": 4
+    }
+  ],
+  "members": [
+    {
+      "member_id": "MEM-001",
+      "name": "Aarav Sharma",
+      "email": "aarav.sharma@example.org",
+      "phone": "+91 9876000000",
+      "member_type": "Student"
+    },
+    {
+      "member_id": "MEM-002",
+      "name": "Diya Patel",
+      "email": "diya.patel@example.org",
+      "phone": "+91 9876000131",
+      "member_type": "Student"
+    },
+    {
+      "member_id": "MEM-003",
+      "name": "Imran Qureshi",
+      "email": "imran.qureshi@example.org",
+      "phone": "+91 9876000262",
+      "member_type": "Student"
+    },
+    {
+      "member_id": "MEM-004",
+      "name": "Kavya Reddy",
+      "email": "kavya.reddy@example.org",
+      "phone": "+91 9876000393",
+      "member_type": "Student"
+    },
+    {
+      "member_id": "MEM-005",
+      "name": "Dr. Suresh Menon",
+      "email": "suresh.menon@example.org",
+      "phone": "+91 9876000524",
+      "member_type": "Faculty"
+    },
+    {
+      "member_id": "MEM-006",
+      "name": "Pooja Chaurasia",
+      "email": "pooja.chaurasia@example.org",
+      "phone": "+91 9876000655",
+      "member_type": "Student"
+    },
+    {
+      "member_id": "MEM-007",
+      "name": "Nikhil Thakur",
+      "email": "nikhil.thakur@example.org",
+      "phone": "+91 9876000786",
+      "member_type": "Student"
+    },
+    {
+      "member_id": "MEM-008",
+      "name": "Sneha Dubey",
+      "email": "sneha.dubey@example.org",
+      "phone": "+91 9876000917",
+      "member_type": "Staff"
+    },
+    {
+      "member_id": "MEM-009",
+      "name": "Rahul Jain",
+      "email": "rahul.jain@example.org",
+      "phone": "+91 9876001048",
+      "member_type": "Student"
+    },
+    {
+      "member_id": "MEM-010",
+      "name": "Lakshmi Iyer",
+      "email": "lakshmi.iyer@example.org",
+      "phone": "+91 9876001179",
+      "member_type": "Faculty"
+    }
+  ],
+  "loans": [
+    {
+      "book_id": "BK-1012",
+      "member_id": "MEM-003",
+      "issued_days_ago": 20,
+      "returned_days_ago": null
+    },
+    {
+      "book_id": "BK-1005",
+      "member_id": "MEM-001",
+      "issued_days_ago": 25,
+      "returned_days_ago": null
+    },
+    {
+      "book_id": "BK-1001",
+      "member_id": "MEM-002",
+      "issued_days_ago": 5,
+      "returned_days_ago": null
+    },
+    {
+      "book_id": "BK-1004",
+      "member_id": "MEM-004",
+      "issued_days_ago": 10,
+      "returned_days_ago": null
+    },
+    {
+      "book_id": "BK-1009",
+      "member_id": "MEM-005",
+      "issued_days_ago": 16,
+      "returned_days_ago": null
+    },
+    {
+      "book_id": "BK-1016",
+      "member_id": "MEM-006",
+      "issued_days_ago": 3,
+      "returned_days_ago": null
+    },
+    {
+      "book_id": "BK-1003",
+      "member_id": "MEM-007",
+      "issued_days_ago": 12,
+      "returned_days_ago": null
+    },
+    {
+      "book_id": "BK-1005",
+      "member_id": "MEM-008",
+      "issued_days_ago": 2,
+      "returned_days_ago": null
+    },
+    {
+      "book_id": "BK-1002",
+      "member_id": "MEM-001",
+      "issued_days_ago": 40,
+      "returned_days_ago": 30
+    },
+    {
+      "book_id": "BK-1006",
+      "member_id": "MEM-002",
+      "issued_days_ago": 45,
+      "returned_days_ago": 20
+    },
+    {
+      "book_id": "BK-1013",
+      "member_id": "MEM-009",
+      "issued_days_ago": 30,
+      "returned_days_ago": 18
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}{{ member.name }}{% endblock %}
+{% block content %}
+{% import '_macros.html' as m %}
+<div class="page-head"><h1>{{ member.name }}</h1>
+  <div class="page-actions"><a class="btn btn-primary" href="{{ url_for('circulation.issue', member_id=member.member_id) }}">Issue a book</a>
+    <a class="btn btn-outline-secondary" href="{{ url_for('members.edit', member_id=member.member_id) }}">Edit</a>
+    <form class="d-inline" method="post" action="{{ url_for('members.delete', member_id=member.member_id) }}" data-confirm="Delete member {{ member.member_id }} ({{ member.name }})? This cannot be undone.">{{ m.csrf() }}<button class="btn btn-outline-danger" type="submit">Delete</button></form></div></div>
+<div class="panel"><dl class="detail-list">
+  <div><dt>Member ID</dt><dd>{{ member.member_id }}</dd></div>
+  <div><dt>Email</dt><dd>{{ member.email }}</dd></div>
+  <div><dt>Phone</dt><dd>{{ member.phone or '-' }}</dd></div>
+  <div><dt>Type</dt><dd>{{ member.member_type }}</dd></div>
+  <div><dt>Joined</dt><dd>{{ member.joined_date|fmt_date }}</dd></div>
+</dl></div>
+<div class="panel p-0"><h2 class="h5 panel-title">Borrowing history</h2>
+{% if history %}<div class="table-responsive"><table class="table mb-0"><caption class="visually-hidden">Borrowing history</caption>
+  <thead><tr><th scope="col">Book</th><th scope="col">Issued</th><th scope="col">Due</th><th scope="col">Returned</th><th scope="col" class="text-end">Overdue days</th><th scope="col" class="text-end">Fine</th></tr></thead>
+  <tbody>{% for t in history %}<tr><td>{{ t.book_title }} ({{ t.book_id }})</td><td>{{ t.issue_date|fmt_date }}</td><td>{{ t.due_date|fmt_date }}</td><td>{{ t.return_date|fmt_date if t.return_date else 'On loan' }}</td><td class="text-end">{{ t.overdue_days if t.return_date else '-' }}</td><td class="text-end">{{ t.fine|money if t.return_date else '-' }}</td></tr>{% endfor %}</tbody></table></div>
+{% else %}<p class="empty px-3">This member has not borrowed any books yet.</p>{% endif %}</div>
+{% endblock %}

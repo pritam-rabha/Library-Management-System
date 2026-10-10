@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}{{ book.title }}{% endblock %}
+{% block content %}
+{% import '_macros.html' as m %}
+<div class="page-head"><h1>{{ book.title }}</h1>
+  <div class="page-actions">
+    {% if book.available_copies > 0 %}<a class="btn btn-primary" href="{{ url_for('circulation.issue', book_id=book.book_id) }}">Issue this book</a>{% endif %}
+    <a class="btn btn-outline-secondary" href="{{ url_for('books.edit', book_id=book.book_id) }}">Edit</a>
+    <form class="d-inline" method="post" action="{{ url_for('books.delete', book_id=book.book_id) }}" data-confirm="Delete book {{ book.book_id }} ({{ book.title }})? This cannot be undone.">{{ m.csrf() }}<button class="btn btn-outline-danger" type="submit">Delete</button></form>
+  </div></div>
+<div class="panel">
+  <dl class="detail-list">
+    <div><dt>Book ID</dt><dd>{{ book.book_id }}</dd></div>
+    <div><dt>Author</dt><dd>{{ book.author }}</dd></div>
+    <div><dt>ISBN</dt><dd>{{ book.isbn or '-' }}</dd></div>
+    <div><dt>Category</dt><dd>{{ book.category or '-' }}</dd></div>
+    <div><dt>Publication year</dt><dd>{{ book.publication_year or '-' }}</dd></div>
+    <div><dt>Copies</dt><dd>{{ book.available_copies }} available of {{ book.total_copies }}</dd></div>
+  </dl>
+</div>
+<div class="panel p-0"><h2 class="h5 panel-title">Loan history</h2>
+{% if history %}<div class="table-responsive"><table class="table mb-0"><caption class="visually-hidden">Loan history for this book</caption>
+  <thead><tr><th scope="col">Borrower</th><th scope="col">Issued</th><th scope="col">Due</th><th scope="col">Returned</th><th scope="col" class="text-end">Overdue days</th><th scope="col" class="text-end">Fine</th></tr></thead>
+  <tbody>{% for t in history %}<tr><td>{{ t.member_name }} ({{ t.member_id }})</td><td>{{ t.issue_date|fmt_date }}</td><td>{{ t.due_date|fmt_date }}</td><td>{{ t.return_date|fmt_date if t.return_date else 'On loan' }}</td><td class="text-end">{{ t.overdue_days if t.return_date else '-' }}</td><td class="text-end">{{ t.fine|money if t.return_date else '-' }}</td></tr>{% endfor %}</tbody></table></div>
+{% else %}<p class="empty px-3">This book has not been issued yet.</p>{% endif %}</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Add a member' if mode == 'new' else 'Edit member' }}{% endblock %}
+{% block content %}
+{% import '_macros.html' as m %}
+<div class="page-head"><h1>{{ 'Add a member' if mode == 'new' else 'Edit member ' ~ member.member_id }}</h1></div>
+{% if errors %}<div class="alert alert-danger" role="alert">Please correct the highlighted fields.</div>{% endif %}
+<form class="panel form-panel" method="post" novalidate>
+  {{ m.csrf() }}
+  <div class="row">
+    <div class="col-md-4">{{ m.field('Member ID', 'member_id', values.get('member_id', ''), errors, required=True, maxlength=20, readonly=(mode == 'edit'), help='Unique. Letters, digits, hyphen or underscore.') }}</div>
+    <div class="col-md-8">{{ m.field('Full name', 'name', values.get('name', ''), errors, required=True, maxlength=100) }}</div>
+    <div class="col-md-6">{{ m.field('Email address', 'email', values.get('email', ''), errors, type='email', required=True, maxlength=120) }}</div>
+    <div class="col-md-3">{{ m.field('Phone', 'phone', values.get('phone', ''), errors, type='tel', maxlength=20) }}</div>
+    <div class="col-md-3">{{ m.select('Member type', 'member_type', zip(member_types, member_types)|list, values.get('member_type', 'Student'), errors) }}</div>
+  </div>
+  <div class="form-actions"><button class="btn btn-primary" type="submit">{{ 'Add member' if mode == 'new' else 'Save changes' }}</button>
+    <a class="btn btn-outline-secondary" href="{{ url_for('members.index') if mode == 'new' else url_for('members.detail', member_id=member.member_id) }}">Cancel</a></div>
+</form>
+{% endblock %}

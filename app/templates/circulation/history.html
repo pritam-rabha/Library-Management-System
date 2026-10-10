@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Transaction history{% endblock %}
+{% block content %}
+{% import '_macros.html' as m %}
+<div class="page-head"><h1>Transaction history</h1></div>
+<form class="panel filter-bar" method="get" action="{{ url_for('circulation.history') }}" role="search">
+  <div class="row g-2 align-items-end">
+    <div class="col-12 col-md-6"><label for="q" class="form-label">Search by book or borrower</label><input id="q" class="form-control" type="search" name="q" value="{{ q }}" maxlength="100"></div>
+    <div class="col-6 col-md-3"><label for="status" class="form-label">Status</label>
+      <select id="status" class="form-select" name="status">
+        <option value="all"{% if status == 'all' %} selected{% endif %}>All</option><option value="issued"{% if status == 'issued' %} selected{% endif %}>Currently issued</option><option value="returned"{% if status == 'returned' %} selected{% endif %}>Returned</option></select></div>
+    <div class="col-6 col-md-3 d-flex gap-2"><button class="btn btn-primary flex-fill" type="submit">Apply</button><a class="btn btn-outline-secondary" href="{{ url_for('circulation.history') }}">Reset</a></div>
+  </div>
+</form>
+<p class="result-count" role="status">{{ rows|length }} transaction{{ '' if rows|length == 1 else 's' }}.</p>
+{% if rows %}
+<div class="panel p-0"><div class="table-responsive"><table class="table align-middle mb-0">
+  <caption class="visually-hidden">All transactions</caption>
+  <thead><tr><th scope="col">Ref</th><th scope="col">Book</th><th scope="col">Borrower</th><th scope="col">Issued</th><th scope="col">Due</th><th scope="col">Returned</th><th scope="col">Status</th><th scope="col" class="text-end">Overdue days</th><th scope="col" class="text-end">Fine</th></tr></thead>
+  <tbody>{% for r in rows %}
+    <tr{% if r.is_overdue %} class="row-overdue"{% endif %}><td class="nowrap">{{ r.txn_id }}</td><td>{{ r.book_title }}</td><td>{{ r.member_name }}</td>
+      <td class="nowrap">{{ r.issue_date|fmt_date }}</td><td class="nowrap">{{ r.due_date|fmt_date }}</td><td class="nowrap">{{ r.return_date|fmt_date if r.return_date else '-' }}</td>
+      <td>{{ m.status_badge(r) }}</td><td class="text-end">{{ r.overdue_days }}</td><td class="text-end nowrap">{{ r.fine|money }}</td></tr>
+  {% endfor %}</tbody></table></div></div>
+{% else %}<div class="panel empty">No transactions match.</div>{% endif %}
+{% endblock %}

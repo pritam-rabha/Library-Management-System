@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Books{% endblock %}
+{% block content %}
+{% import '_macros.html' as m %}
+<div class="page-head"><h1>Books</h1><div class="page-actions"><a class="btn btn-primary" href="{{ url_for('books.create') }}">Add a book</a></div></div>
+<form class="panel filter-bar" method="get" action="{{ url_for('books.index') }}" role="search">
+  <div class="row g-2 align-items-end">
+    <div class="col-12 col-md-5"><label for="q" class="form-label">Search by title or author</label>
+      <input id="q" class="form-control" type="search" name="q" value="{{ q }}" maxlength="100" placeholder="For example: data structures, Kulkarni"></div>
+    <div class="col-6 col-md-3"><label for="category" class="form-label">Category</label>
+      <select id="category" class="form-select" name="category"><option value="">All categories</option>
+        {% for c in categories %}<option value="{{ c }}"{% if c == category %} selected{% endif %}>{{ c }}</option>{% endfor %}</select></div>
+    <div class="col-6 col-md-2"><label for="availability" class="form-label">Availability</label>
+      <select id="availability" class="form-select" name="availability">
+        <option value="all"{% if availability == 'all' %} selected{% endif %}>All</option>
+        <option value="available"{% if availability == 'available' %} selected{% endif %}>Available</option>
+        <option value="unavailable"{% if availability == 'unavailable' %} selected{% endif %}>All issued</option></select></div>
+    <div class="col-12 col-md-2 d-flex gap-2"><button class="btn btn-primary flex-fill" type="submit">Search</button>
+      <a class="btn btn-outline-secondary" href="{{ url_for('books.index') }}">Reset</a></div>
+  </div>
+</form>
+<p class="result-count" role="status">{{ books|length }} book{{ '' if books|length == 1 else 's' }} found{% if q %} for &ldquo;{{ q }}&rdquo;{% endif %}.</p>
+{% if books %}
+<div class="panel p-0"><div class="table-responsive"><table class="table table-hover align-middle mb-0">
+  <caption class="visually-hidden">Book records</caption>
+  <thead><tr><th scope="col">ID</th><th scope="col">Title</th><th scope="col">Author</th><th scope="col">Category</th><th scope="col" class="text-end">Available</th><th scope="col" class="text-end">Actions</th></tr></thead>
+  <tbody>{% for b in books %}
+    <tr><td class="nowrap">{{ b.book_id }}</td><td><a href="{{ url_for('books.detail', book_id=b.book_id) }}">{{ b.title }}</a></td><td>{{ b.author }}</td><td>{{ b.category or '-' }}</td>
+      <td class="text-end nowrap">{% if b.available_copies == 0 %}<span class="badge badge-none">None</span> {% endif %}{{ b.available_copies }} of {{ b.total_copies }}</td>
+      <td class="text-end nowrap"><a class="btn btn-sm btn-outline-secondary" href="{{ url_for('books.edit', book_id=b.book_id) }}">Edit<span class="visually-hidden"> {{ b.title }}</span></a>
+        <form class="d-inline" method="post" action="{{ url_for('books.delete', book_id=b.book_id) }}" data-confirm="Delete book {{ b.book_id }} ({{ b.title }})? This cannot be undone.">{{ m.csrf() }}<button class="btn btn-sm btn-outline-danger" type="submit">Delete<span class="visually-hidden"> {{ b.title }}</span></button></form></td></tr>
+  {% endfor %}</tbody></table></div></div>
+{% else %}<div class="panel empty">No books match your search. Check the spelling or <a href="{{ url_for('books.index') }}">clear the filters</a>.</div>{% endif %}
+{% endblock %}

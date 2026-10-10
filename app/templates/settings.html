@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Settings{% endblock %}
+{% block content %}
+{% import '_macros.html' as m %}
+<div class="page-head"><h1>Settings</h1></div>
+{% if errors %}<div class="alert alert-danger" role="alert">Please correct the highlighted fields.</div>{% endif %}
+<form class="panel form-panel" method="post" novalidate>
+  {{ m.csrf() }}
+  <div class="row">
+    <div class="col-md-4">{{ m.field('Fine per overdue day (' ~ currency ~ ')', 'fine_per_day', values.get('fine_per_day', ''), errors, required=True, inputmode='decimal', help='Fine = overdue days multiplied by this amount.') }}</div>
+    <div class="col-md-4">{{ m.field('Standard loan period (days)', 'loan_days', values.get('loan_days', ''), errors, type='number', required=True) }}</div>
+    <div class="col-md-4">{{ m.field('Maximum loans per member', 'max_loans_per_member', values.get('max_loans_per_member', ''), errors, type='number', required=True) }}</div>
+  </div>
+  <div class="form-actions"><button class="btn btn-primary" type="submit">Save settings</button></div>
+</form>
+{% endblock %}

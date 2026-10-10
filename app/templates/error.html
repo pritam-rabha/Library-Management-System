@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% set body %}
+<div class="panel narrow">
+  <p class="error-code">Error {{ code }}</p>
+  <h1 class="h3">{{ title }}</h1>
+  <p>{{ message }}</p>
+  <p class="mb-0"><a class="btn btn-primary" href="{{ url_for('main.dashboard') }}">Return to the dashboard</a></p>
+</div>
+{% endset %}
+{% block content %}{{ body }}{% endblock %}
+{% block public %}{{ body }}{% endblock %}

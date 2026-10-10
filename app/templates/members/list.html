@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Members{% endblock %}
+{% block content %}
+{% import '_macros.html' as m %}
+<div class="page-head"><h1>Members</h1><div class="page-actions"><a class="btn btn-primary" href="{{ url_for('members.create') }}">Add a member</a></div></div>
+<form class="panel filter-bar" method="get" action="{{ url_for('members.index') }}" role="search">
+  <div class="row g-2 align-items-end">
+    <div class="col-12 col-md-8"><label for="q" class="form-label">Search by name, member ID or email</label><input id="q" class="form-control" type="search" name="q" value="{{ q }}" maxlength="100"></div>
+    <div class="col-12 col-md-4 d-flex gap-2"><button class="btn btn-primary flex-fill" type="submit">Search</button><a class="btn btn-outline-secondary" href="{{ url_for('members.index') }}">Reset</a></div>
+  </div>
+</form>
+<p class="result-count" role="status">{{ members|length }} member{{ '' if members|length == 1 else 's' }} found.</p>
+{% if members %}
+<div class="panel p-0"><div class="table-responsive"><table class="table table-hover align-middle mb-0">
+  <caption class="visually-hidden">Member records</caption>
+  <thead><tr><th scope="col">ID</th><th scope="col">Name</th><th scope="col">Email</th><th scope="col">Phone</th><th scope="col">Type</th><th scope="col" class="text-end">Actions</th></tr></thead>
+  <tbody>{% for x in members %}
+    <tr><td class="nowrap">{{ x.member_id }}</td><td><a href="{{ url_for('members.detail', member_id=x.member_id) }}">{{ x.name }}</a></td><td>{{ x.email }}</td><td>{{ x.phone or '-' }}</td><td>{{ x.member_type }}</td>
+      <td class="text-end nowrap"><a class="btn btn-sm btn-outline-secondary" href="{{ url_for('members.edit', member_id=x.member_id) }}">Edit<span class="visually-hidden"> {{ x.name }}</span></a>
+        <form class="d-inline" method="post" action="{{ url_for('members.delete', member_id=x.member_id) }}" data-confirm="Delete member {{ x.member_id }} ({{ x.name }})? This cannot be undone.">{{ m.csrf() }}<button class="btn btn-sm btn-outline-danger" type="submit">Delete<span class="visually-hidden"> {{ x.name }}</span></button></form></td></tr>
+  {% endfor %}</tbody></table></div></div>
+{% else %}<div class="panel empty">No members match your search.</div>{% endif %}
+{% endblock %}

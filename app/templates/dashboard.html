@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="page-head"><h1>Dashboard</h1>
+  <div class="page-actions"><a class="btn btn-primary" href="{{ url_for('circulation.issue') }}">Issue a book</a>
+  <a class="btn btn-outline-secondary" href="{{ url_for('circulation.issued') }}">View issued books</a></div></div>
+
+<section aria-label="Library summary" class="stat-grid">
+  <a class="stat" href="{{ url_for('books.index') }}"><span class="stat-label">Total books</span><span class="stat-value">{{ stats.total_books }}</span><span class="stat-note">{{ stats.total_copies }} copies in the catalogue</span></a>
+  <a class="stat" href="{{ url_for('circulation.available') }}"><span class="stat-label">Available copies</span><span class="stat-value">{{ stats.available_copies }}</span><span class="stat-note">on the shelves now</span></a>
+  <a class="stat" href="{{ url_for('circulation.issued') }}"><span class="stat-label">Issued books</span><span class="stat-value">{{ stats.issued_books }}</span><span class="stat-note">currently on loan</span></a>
+  <a class="stat" href="{{ url_for('members.index') }}"><span class="stat-label">Registered users</span><span class="stat-value">{{ stats.members }}</span><span class="stat-note">library members</span></a>
+  <a class="stat{% if stats.overdue_books %} stat-alert{% endif %}" href="{{ url_for('circulation.issued', status='overdue') }}"><span class="stat-label">Overdue books</span><span class="stat-value">{{ stats.overdue_books }}</span><span class="stat-note">past their due date</span></a>
+</section>
+
+<div class="row g-4">
+  <section class="col-12 col-xl-7" aria-labelledby="overdue-h">
+    <div class="panel">
+      <h2 class="h5" id="overdue-h">Overdue loans</h2>
+      {% if overdue %}
+      <div class="table-responsive"><table class="table align-middle">
+        <caption class="visually-hidden">Overdue loans</caption>
+        <thead><tr><th scope="col">Book</th><th scope="col">Borrower</th><th scope="col">Due</th><th scope="col" class="text-end">Days</th><th scope="col" class="text-end">Fine</th></tr></thead>
+        <tbody>{% for r in overdue %}
+          <tr class="row-overdue"><td>{{ r.book_title }}</td><td>{{ r.member_name }}</td><td>{{ r.due_date|fmt_date }}</td><td class="text-end">{{ r.overdue_days }}</td><td class="text-end">{{ r.fine|money }}</td></tr>
+        {% endfor %}</tbody></table></div>
+      <a href="{{ url_for('circulation.issued', status='overdue') }}">See all overdue loans</a>
+      {% else %}<p class="empty">No overdue loans.</p>{% endif %}
+    </div>
+  </section>
+  <section class="col-12 col-xl-5" aria-labelledby="recent-h">
+    <div class="panel">
+      <h2 class="h5" id="recent-h">Recent activity</h2>
+      {% if recent %}<ul class="activity">{% for t in recent %}
+        <li><strong>{{ t.book_title }}</strong><br>
+          {% if t.return_date %}Returned by {{ t.member_name }} on {{ t.return_date|fmt_date }}{% else %}Issued to {{ t.member_name }} on {{ t.issue_date|fmt_date }}{% endif %}</li>
+      {% endfor %}</ul>{% else %}<p class="empty">No transactions recorded yet.</p>{% endif %}
+    </div>
+  </section>
+</div>
+{% endblock %}
