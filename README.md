@@ -2,12 +2,13 @@
 
 A web application for managing a small library: books, members, issuing and returning, automatic fines, search, and backup and restore. Written in Python with Flask and stored in a single JSON file.
 
-**Author:** Pritam Rabha
-**Programme:** MCA, 3rd Semester, Python Programming
-**Institution:** Dr. Hari Singh Gour Vishwavidyalaya, Sagar, Madhya Pradesh
-**Project Guide:** Dr. Pangambam Sendash Singh
+**Author:** Pritam Rabha  
+**Programme:** MCA, 3rd Semester, Python Programming  
+**Project Guide:** Dr. Pangambam Sendash Singh    
+**Institution:** Dr. Hari Singh Gour Vishwavidyalaya, Sagar, Madhya Pradesh  
 
-> **Academic project disclaimer.** This application is an independent educational project prepared by a student for an MCA Python Programming assignment. It is **not** an official application of Dr. Hari Singh Gour Vishwavidyalaya, Sagar, and it is **not officially endorsed, reviewed, approved or operated by the university**. The university name and logo appear only to identify the institution at which the assignment was prepared; all rights in the name and logo belong to the university. All books, members and loan records in the sample data are fictional.
+
+> **Academic Project Disclaimer:** This is an independent educational project prepared for an MCA Python Programming assignment. It is not an official application of Dr. Hari Singh Gour Vishwavidyalaya, Sagar, and the university has not reviewed or endorsed it. All books, members and loan records in the sample data are fictional.
 
 ---
 
