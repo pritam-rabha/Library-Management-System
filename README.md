@@ -2,6 +2,11 @@
 
 A web application for managing a small library: books, members, issuing and returning, automatic fines, search, and backup and restore. Written in Python with Flask and stored in a single JSON file.
 
+## Live Demo
+
+**Live Application:** [Student Management System](https://library-management-system-pmko.onrender.com)   
+
+
 **Author:** Pritam Rabha  
 **Programme:** MCA, 3rd Semester, Python Programming  
 **Project Guide:** Dr. Pangambam Sendash Singh    
